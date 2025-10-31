@@ -1,145 +1,85 @@
-import { useState, useEffect } from 'react';
-
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  opacity: number;
-  life: number;
-}
+import { useState, useEffect } from "react";
+import DecryptedText from "../components/DecryptedText";
+import LiquidEther from "../components/LiquidEther";
 
 export default function Maintenance() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const [particleId, setParticleId] = useState(0);
-  const [clickRipples, setClickRipples] = useState<{id: number, x: number, y: number}[]>([]);
+  const [clickRipples, setClickRipples] = useState<
+    { id: number; x: number; y: number }[]
+  >([]);
   const [rippleId, setRippleId] = useState(0);
 
   useEffect(() => {
-    const MAX_PARTICLES = 150;
-    let lastTime = 0;
-    const updateMousePosition = (e: MouseEvent) => {
-      const now = Date.now();
-      // Throttle particle creation to every 20ms (faster creation)
-      if (now - lastTime < 20) return;
-      lastTime = now;
-      const newX = e.clientX;
-      const newY = e.clientY;
-      setMousePosition({ x: newX, y: newY });
-
-      // Create more particles per move
-      const newParticles: Particle[] = [];
-      for (let i = 0; i < 2; i++) {
-        newParticles.push({
-          id: particleId + i,
-          x: newX + (Math.random() - 0.5) * 25,
-          y: newY + (Math.random() - 0.5) * 25,
-          vx: (Math.random() - 0.5) * 2.5,
-          vy: (Math.random() - 0.5) * 2.5 - 0.5,
-          size: Math.random() * 6 + 3,
-          opacity: 1,
-          life: 1
-        });
-      }
-      setParticles(prev => {
-        const combined = [...prev, ...newParticles];
-        return combined.length > MAX_PARTICLES ? combined.slice(combined.length - MAX_PARTICLES) : combined;
-      });
-      setParticleId(prev => prev + 2);
-    };
-
     const handleClick = (e: MouseEvent) => {
       const newRipple = {
         id: rippleId,
         x: e.clientX,
-        y: e.clientY
+        y: e.clientY,
       };
-      setClickRipples(prev => [...prev, newRipple]);
-      setRippleId(prev => prev + 1);
-      
+      setClickRipples((prev) => [...prev, newRipple]);
+      setRippleId((prev) => prev + 1);
+
       // Remove ripple after animation
       setTimeout(() => {
-        setClickRipples(prev => prev.filter(ripple => ripple.id !== newRipple.id));
+        setClickRipples((prev) =>
+          prev.filter((ripple) => ripple.id !== newRipple.id)
+        );
       }, 1000);
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('click', handleClick);
+    window.addEventListener("click", handleClick);
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('click', handleClick);
+      window.removeEventListener("click", handleClick);
     };
-  }, [particleId, rippleId]);
-
-  // Animate particles
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setParticles(prev => 
-        prev.map(particle => ({
-          ...particle,
-          x: particle.x + particle.vx,
-          y: particle.y + particle.vy,
-          vy: particle.vy + 0.18, // gravity (slightly less)
-          opacity: particle.opacity * 0.96,
-          life: particle.life * 0.98,
-          size: particle.size * 0.995
-        })).filter(particle => particle.life > 0.1)
-      );
-    }, 24); 
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [rippleId]);
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      background: "linear-gradient(135deg, #181616ff 0%, #101520ff 50%, #520505ff 100%)",
-      color: "#fff",
-      padding: "20px",
-      textAlign: "center",
-      position: "relative",
-      overflow: "hidden"
-    }}>
-      {/* Watery texture background */}
-      <div 
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#000000",
+        color: "#fff",
+        padding: "20px",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* LiquidEther Background */}
+      <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-          background: `
-            radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, 
-              rgba(0, 150, 255, 0.2) 0%,
-              rgba(0, 200, 255, 0.12) 30%,
-              transparent 70%
-            ),
-            radial-gradient(circle 110px at ${mousePosition.x - 20}px ${mousePosition.y - 20}px, 
-              rgba(255, 255, 255, 0.08) 0%,
-              transparent 50%
-            ),
-            conic-gradient(from 0deg at ${mousePosition.x}px ${mousePosition.y}px, 
-              transparent 0deg,
-              rgba(0, 180, 255, 0.15) 90deg,
-              rgba(0, 150, 255, 0.12) 180deg,
-              rgba(255, 255, 255, 0.06) 270deg,
-              transparent 360deg
-            )
-          `,
-          pointerEvents: "none",
-          transition: "background 0.1s ease-out"
+          zIndex: 0,
         }}
-      />
-      
+      >
+        <LiquidEther
+          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous={false}
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.1}
+          autoResumeDelay={100}
+          autoRampDuration={0.2}
+        />
+      </div>
+
       {/* Click Ripple effects */}
-      {clickRipples.map(ripple => (
+      {clickRipples.map((ripple) => (
         <div
           key={ripple.id}
           style={{
@@ -149,53 +89,30 @@ export default function Maintenance() {
             width: "200px",
             height: "200px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(0, 180, 255, 0.4) 0%, rgba(0, 150, 255, 0.2) 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)",
+            background:
+              "radial-gradient(circle, rgba(0, 180, 255, 0.4) 0%, rgba(0, 150, 255, 0.2) 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)",
             pointerEvents: "none",
-            animation: "clickRipple 1s ease-out forwards"
+            animation: "clickRipple 1s ease-out forwards",
           }}
         />
       ))}
 
-      {/* Water particles */}
-      {particles.map(particle => (
-        <div
-          key={particle.id}
-          style={{
-            position: "absolute",
-            left: particle.x - particle.size / 2,
-            top: particle.y - particle.size / 2,
-            width: particle.size,
-            height: particle.size,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, 
-              rgba(135, 206, 250, ${particle.opacity}) 0%, 
-              rgba(0, 191, 255, ${particle.opacity * 0.8}) 30%, 
-              rgba(30, 144, 255, ${particle.opacity * 0.6}) 60%,
-              transparent 100%
-            )`,
-            boxShadow: `0 0 ${particle.size}px rgba(0, 191, 255, ${particle.opacity * 0.5})`,
-            pointerEvents: "none",
-            animation: "sparkle 0.8s ease-out forwards"
-          }}
-        />
-      ))}
-      
       {/* TEDx Logo */}
       <div className="logo">
-        <img src="/images/logo.png" alt="TEDx" />
+        <img src="/images/logo-white.png" alt="TEDx" />
       </div>
 
       <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-        
         @keyframes glow {
-          0%, 100% { text-shadow: 0 0 5px #da9b9bff, 0 0 3px #ff2d92; }
-          50% { text-shadow: 0 0 5px #ff0000ff, 0 0 3px #ffffffff; }
+          0%,
+          100% {
+            text-shadow: 0 0 5px #da9b9bff, 0 0 3px #ff2d92;
+          }
+          50% {
+            text-shadow: 0 0 5px #ff0000ff, 0 0 3px #ffffffff;
+          }
         }
-        
+
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -206,7 +123,7 @@ export default function Maintenance() {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes clickRipple {
           0% {
             transform: scale(0);
@@ -226,41 +143,30 @@ export default function Maintenance() {
           }
         }
 
-        @keyframes sparkle {
-          0% {
-            transform: scale(0) rotate(0deg);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.2) rotate(180deg);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(0.2) rotate(360deg);
-            opacity: 0;
-          }
-        }
-        
+        /* Removed unused keyframes (pulse, sparkle) to clean up the stylesheet */
+
         .main-title {
           font-size: 4rem;
           font-weight: 900;
-          background: linear-gradient(45deg, #8B0000, #DC143C, #B22222);
+          background: linear-gradient(45deg, #8b0000, #dc143c, #b22222);
           background-size: 400% 400%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          animation: pulse 2s ease-in-out infinite, glow 3s ease-in-out infinite alternate;
+          animation: glow 3s ease-in-out infinite alternate;
           margin-bottom: 2rem;
-          margin-top: 8rem;
+          margin-top: 12rem;
           letter-spacing: 2px;
           text-transform: uppercase;
-          font-family: 'Arial Black', Arial, sans-serif;
+          font-family: "Arial Black", Arial, sans-serif;
+          position: relative;
+          z-index: 2;
         }
-        
+
         .subtitle {
           font-size: 1.5rem;
           margin-top: 2rem;
-          font-weight: 600;
+          font-weight: 800;
           color: #ffffff;
           text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
           animation: fadeInUp 1s ease-out 0.5s both;
@@ -268,12 +174,14 @@ export default function Maintenance() {
           max-width: 600px;
           margin-left: auto;
           margin-right: auto;
+          position: relative;
+          z-index: 2;
         }
-        
+
         .cooking-text {
           font-size: 2rem;
           font-weight: 700 !important;
-          background: linear-gradient(45deg, #8B0000, #a30a28ff, #B22222);
+          background: linear-gradient(45deg, #8b0000, #a30a28ff, #b22222);
           background-size: 400% 400%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -283,10 +191,12 @@ export default function Maintenance() {
           margin-bottom: 2rem;
           letter-spacing: 1px;
           text-transform: uppercase;
-          font-family: 'Arial Black', 'Arial', sans-serif;
+          font-family: "Arial Black", "Arial", sans-serif;
           -webkit-font-smoothing: antialiased;
+          position: relative;
+          z-index: 2;
         }
-        
+
         .highlight {
           background: linear-gradient(45deg, #ff2d92, #ff6b6b);
           -webkit-background-clip: text;
@@ -294,22 +204,27 @@ export default function Maintenance() {
           background-clip: text;
           font-weight: 800;
         }
-        
+
+        .tedx-red {
+          color: #dc143c !important;
+          font-weight: 600;
+        }
+
         .logo {
           position: absolute;
-          top: 20%;
+          top: calc(20% - 30px);
           left: 50%;
           transform: translate(-50%, -50%);
           pointer-events: none;
           z-index: 1;
         }
-        
+
         .logo img {
           width: 700px;
           height: auto;
           opacity: 1;
         }
-        
+
         @media (max-width: 768px) {
           .main-title {
             font-size: 2rem;
@@ -330,12 +245,12 @@ export default function Maintenance() {
           }
           .logo img {
             width: 70vw;
-          max-width: 350px;
-          min-width: 180px;
-          height: auto;
+            max-width: 350px;
+            min-width: 180px;
+            height: auto;
           }
         }
-        
+
         @media (max-width: 480px) {
           .main-title {
             font-size: 1.5rem;
@@ -359,17 +274,17 @@ export default function Maintenance() {
           }
         }
       `}</style>
-      
-      <h1 className="main-title">
-        Website Under Maintenance
-      </h1>
-      <h3 className="cooking-text">
-        Stay curious. We will be live soon!
-      </h3>
-      <p className="subtitle">
-        The new <span className="highlight">TEDx NIIT University</span> site is coming soon.<br />
-        <strong>Stay tuned for something extraordinary!</strong>
-      </p>
+
+      <h1 className="main-title">Website Under Maintenance</h1>
+      <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
+      <div className="subtitle">
+        <DecryptedText
+          text="The new TEDx NIITUniversity site is coming soon. 
+            Stay tuned for something extraordinary!"
+          animateOn="view"
+          revealDirection="center"
+        />
+      </div>
     </div>
   );
 }
