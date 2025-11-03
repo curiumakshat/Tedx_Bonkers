@@ -10,25 +10,17 @@ export default function Maintenance() {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      const newRipple = {
-        id: rippleId,
-        x: e.clientX,
-        y: e.clientY,
-      };
+      const newRipple = { id: rippleId, x: e.clientX, y: e.clientY };
       setClickRipples((prev) => [...prev, newRipple]);
       setRippleId((prev) => prev + 1);
-
       setTimeout(() => {
         setClickRipples((prev) =>
           prev.filter((ripple) => ripple.id !== newRipple.id)
         );
       }, 1000);
     };
-
     window.addEventListener("click", handleClick);
-    return () => {
-      window.removeEventListener("click", handleClick);
-    };
+    return () => window.removeEventListener("click", handleClick);
   }, [rippleId]);
 
   return (
@@ -47,7 +39,6 @@ export default function Maintenance() {
         overflow: "hidden",
       }}
     >
-      {/* LiquidEther Background */}
       <div
         style={{
           position: "absolute",
@@ -77,7 +68,6 @@ export default function Maintenance() {
         />
       </div>
 
-      {/* Click Ripple effects */}
       {clickRipples.map((ripple) => (
         <div
           key={ripple.id}
@@ -98,12 +88,9 @@ export default function Maintenance() {
       ))}
 
       <div className="fg">
-        {/* TEDx Logo */}
         <span className="logo">
           <img src="/images/logo-white.png" alt="TEDx" />
         </span>
-
-        {/* Translucent Text Overlay */}
         <span className="text-overlay">
           <h1 className="main-title">Website Under Maintenance</h1>
           <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
@@ -133,18 +120,18 @@ export default function Maintenance() {
         .fg {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem; /* reduced gap */
+          gap: 0.5rem;
           align-items: center;
           z-index: 2;
           position: relative;
-          pointer-events: none; /* 🪄 lets mouse events pass through */
+          pointer-events: none;
         }
 
         .logo img {
           width: 700px;
           height: auto;
           opacity: 1;
-          pointer-events: none; /* 🪄 allows LiquidEther effect through */
+          pointer-events: none;
         }
 
         .text-overlay {
@@ -157,9 +144,7 @@ export default function Maintenance() {
           max-width: 800px;
           margin-top: 4rem;
           text-align: center;
-          pointer-events: none; /* 🪄 passes hover events through box */
-
-          /* Embossed edges */
+          pointer-events: none;
           box-shadow:
             inset 1px 1px 4px rgba(255, 255, 255, 0.15),
             inset -1px -1px 4px rgba(0, 0, 0, 0.5),
@@ -169,7 +154,7 @@ export default function Maintenance() {
 
         .main-title,
         .cooking-text {
-          pointer-events: auto; /* 🪄 allows text selection while still bubbling hover */
+          pointer-events: auto;
         }
 
         .main-title {
