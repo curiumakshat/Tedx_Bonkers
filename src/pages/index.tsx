@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import DecryptedText from "../components/DecryptedText";
 import LiquidEther from "../components/LiquidEther";
 
 export default function Maintenance() {
@@ -278,12 +277,9 @@ export default function Maintenance() {
       <h1 className="main-title">Website Under Maintenance</h1>
       <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
       <div className="subtitle">
-        <DecryptedText
-          text="The new TEDx NIITUniversity site is coming soon. 
+        
+          "The new TEDx NIITUniversity site is coming soon. 
             Stay tuned for something extraordinary!"
-          animateOn="view"
-          revealDirection="center"
-        />
       </div>
     </div>
   );
