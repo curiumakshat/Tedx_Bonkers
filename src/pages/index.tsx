@@ -278,8 +278,8 @@ export default function Maintenance() {
       <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
       <div className="subtitle">
         
-          "The new TEDx NIITUniversity site is coming soon. 
-            Stay tuned for something extraordinary!"
+          &ldquo;The new TEDx NIITUniversity site is coming soon. 
+            Stay tuned for something extraordinary!&rdquo;
       </div>
     </div>
   );
