@@ -47,7 +47,18 @@ interface LiquidEtherWebGL {
     forceStop: () => void;
   };
   resize: () => void;
-  start: () => void;
+  const defaultColors = ["#ff2d2dff", "#ff6b6bff", "#b20000ff"];
+
+  // Friendly alias for render targets used throughout the simulation
+  type FBO = THREE.WebGLRenderTarget;
+
+  // Minimal props shape for ShaderPass-like classes
+  interface ShaderPassProps {
+    material?: { uniforms?: Uniforms } & Record<string, unknown>;
+    output?: FBO | null;
+    output0?: FBO | null;
+    output1?: FBO | null;
+  }
   pause: () => void;
   dispose: () => void;
 }
@@ -555,7 +566,7 @@ export default function LiquidEther({
 }
 `;
 
-    type Uniforms = Record<string, { value: any }>;
+    type Uniforms = Record<string, { value: unknown }>;
 
     class ShaderPass {
       props: any;
