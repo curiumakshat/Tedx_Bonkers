@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import DecryptedText from "../components/DecryptedText";
 import LiquidEther from "../components/LiquidEther";
 
 export default function Maintenance() {
@@ -50,12 +49,12 @@ export default function Maintenance() {
         }}
       >
         <LiquidEther
-          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          // colors={["#ff0000ff", "#e00e0eff", "#e94d4dff"]}
           mouseForce={20}
-          cursorSize={100}
+          cursorSize={180}
           isViscous={false}
-          viscous={30}
-          iterationsViscous={32}
+          viscous={35}
+          iterationsViscous={42}
           iterationsPoisson={32}
           resolution={0.5}
           isBounce={false}
@@ -208,6 +207,14 @@ export default function Maintenance() {
           }
         }
       `}</style>
+
+      <h1 className="main-title">Website Under Maintenance</h1>
+      <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
+      <div className="subtitle">
+        
+          &ldquo;The new TEDx NIITUniversity site is coming soon. 
+            Stay tuned for something extraordinary!&rdquo;
+      </div>
     </div>
   );
 }

@@ -34,4 +34,10 @@ const About: React.FC = () => {
   );
 };
 
+export async function getServerSideProps() {
+  return {
+    notFound: true,
+  };
+}
+
 export default About;
