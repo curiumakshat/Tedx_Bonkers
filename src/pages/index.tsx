@@ -48,24 +48,24 @@ export default function Maintenance() {
           zIndex: 0,
         }}
       >
-        <LiquidEther
-          // colors={["#ff0000ff", "#e00e0eff", "#e94d4dff"]}
-          mouseForce={20}
-          cursorSize={120}
-          isViscous={false}
-          viscous={35}
-          iterationsViscous={32}
-          iterationsPoisson={22}
-          resolution={0.3}
-          isBounce={true}
-          autoDemo={true}
-          autoSpeed={0.03}
-          autoIntensity={2.2}
-          takeoverDuration={0.1}
-          autoResumeDelay={100}
-          autoRampDuration={0.2}
-        />
-      </div>
+          <LiquidEther
+            // colors={["#ff0000ff", "#e00e0eff", "#e94d4dff"]}
+            mouseForce={10}
+            cursorSize={140}
+            isViscous={false}
+            viscous={35}
+            iterationsViscous={32}
+            iterationsPoisson={22}
+            resolution={0.3}
+            isBounce={true}
+            autoDemo={true}
+            autoSpeed={1.0}
+            autoIntensity={1.5}
+            takeoverDuration={0.1}
+            autoResumeDelay={0}
+            autoRampDuration={0.2}
+          />
+        </div>
 
       {clickRipples.map((ripple) => (
         <div

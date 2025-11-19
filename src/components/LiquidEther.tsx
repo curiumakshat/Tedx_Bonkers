@@ -78,7 +78,7 @@ export default function LiquidEther({
   autoSpeed = 0.5,
   autoIntensity = 2.2,
   takeoverDuration = 0.25,
-  autoResumeDelay = 1000,
+  autoResumeDelay = 0,
   autoRampDuration = 0.6,
 }: LiquidEtherProps): React.ReactElement {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -293,9 +293,9 @@ export default function LiquidEther({
           }
         }
         this.diff.subVectors(this.coords, this.coords_old);
-        this.coords_old.copy(this.coords);
-        if (this.coords_old.x === 0 && this.coords_old.y === 0)
-          this.diff.set(0, 0);
+        this.coords_old.copy(this.coords);  
+        // if (this.coords_old.x === 0 && this.coords_old.y === 0)
+        //   this.diff.set(0, 0);
         if (this.isAutoActive && !this.takeoverActive)
           this.diff.multiplyScalar(this.autoIntensity);
       }
@@ -1132,6 +1132,7 @@ export default function LiquidEther({
       private _onVisibility?: () => void;
       constructor(props: WebGLManagerProps) {
         this.props = props;
+        this.lastUserInteraction = performance.now() - props.autoResumeDelay;
         Common.init(props.$wrapper);
         Mouse.init(props.$wrapper);
         Mouse.autoIntensity = props.autoIntensity;
