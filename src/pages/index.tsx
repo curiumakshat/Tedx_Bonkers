@@ -51,15 +51,15 @@ export default function Maintenance() {
         <LiquidEther
           // colors={["#ff0000ff", "#e00e0eff", "#e94d4dff"]}
           mouseForce={20}
-          cursorSize={180}
+          cursorSize={120}
           isViscous={false}
           viscous={35}
-          iterationsViscous={42}
-          iterationsPoisson={32}
-          resolution={0.5}
-          isBounce={false}
+          iterationsViscous={32}
+          iterationsPoisson={22}
+          resolution={0.3}
+          isBounce={true}
           autoDemo={true}
-          autoSpeed={0.5}
+          autoSpeed={0.03}
           autoIntensity={2.2}
           takeoverDuration={0.1}
           autoResumeDelay={100}
