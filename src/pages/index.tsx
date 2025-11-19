@@ -208,13 +208,7 @@ export default function Maintenance() {
         }
       `}</style>
 
-      <h1 className="main-title">Website Under Maintenance</h1>
-      <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
-      <div className="subtitle">
-        
-          &ldquo;The new TEDx NIITUniversity site is coming soon. 
-            Stay tuned for something extraordinary!&rdquo;
-      </div>
+      
     </div>
   );
 }

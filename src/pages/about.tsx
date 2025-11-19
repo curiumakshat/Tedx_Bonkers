@@ -40,4 +40,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default About;
+ export default About;
