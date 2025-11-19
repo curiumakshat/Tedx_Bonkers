@@ -9,26 +9,17 @@ export default function Maintenance() {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      const newRipple = {
-        id: rippleId,
-        x: e.clientX,
-        y: e.clientY,
-      };
+      const newRipple = { id: rippleId, x: e.clientX, y: e.clientY };
       setClickRipples((prev) => [...prev, newRipple]);
       setRippleId((prev) => prev + 1);
-
-      // Remove ripple after animation
       setTimeout(() => {
         setClickRipples((prev) =>
           prev.filter((ripple) => ripple.id !== newRipple.id)
         );
       }, 1000);
     };
-
     window.addEventListener("click", handleClick);
-    return () => {
-      window.removeEventListener("click", handleClick);
-    };
+    return () => window.removeEventListener("click", handleClick);
   }, [rippleId]);
 
   return (
@@ -47,7 +38,6 @@ export default function Maintenance() {
         overflow: "hidden",
       }}
     >
-      {/* LiquidEther Background */}
       <div
         style={{
           position: "absolute",
@@ -77,7 +67,6 @@ export default function Maintenance() {
         />
       </div>
 
-      {/* Click Ripple effects */}
       {clickRipples.map((ripple) => (
         <div
           key={ripple.id}
@@ -92,37 +81,22 @@ export default function Maintenance() {
               "radial-gradient(circle, rgba(0, 180, 255, 0.4) 0%, rgba(0, 150, 255, 0.2) 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)",
             pointerEvents: "none",
             animation: "clickRipple 1s ease-out forwards",
+            zIndex: 1,
           }}
         />
       ))}
 
-      {/* TEDx Logo */}
-      <div className="logo">
-        <img src="/images/logo-white.png" alt="TEDx" />
+      <div className="fg">
+        <span className="logo">
+          <img src="/images/logo-white.png" alt="TEDx" />
+        </span>
+        <span className="text-overlay">
+          <h1 className="main-title">Website Under Maintenance</h1>
+          <h3 className="cooking-text">Stay curious. We will be live soon!</h3>
+        </span>
       </div>
 
       <style jsx>{`
-        @keyframes glow {
-          0%,
-          100% {
-            text-shadow: 0 0 5px #da9b9bff, 0 0 3px #ff2d92;
-          }
-          50% {
-            text-shadow: 0 0 5px #ff0000ff, 0 0 3px #ffffffff;
-          }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         @keyframes clickRipple {
           0% {
             transform: scale(0);
@@ -142,134 +116,94 @@ export default function Maintenance() {
           }
         }
 
-        /* Removed unused keyframes (pulse, sparkle) to clean up the stylesheet */
-
-        .main-title {
-          font-size: 4rem;
-          font-weight: 900;
-          background: linear-gradient(45deg, #8b0000, #dc143c, #b22222);
-          background-size: 400% 400%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: glow 3s ease-in-out infinite alternate;
-          margin-bottom: 2rem;
-          margin-top: 12rem;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          font-family: "Arial Black", Arial, sans-serif;
-          position: relative;
+        .fg {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+          align-items: center;
           z-index: 2;
-        }
-
-        .subtitle {
-          font-size: 1.5rem;
-          margin-top: 2rem;
-          font-weight: 800;
-          color: #ffffff;
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-          animation: fadeInUp 1s ease-out 0.5s both;
-          line-height: 1.6;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
           position: relative;
-          z-index: 2;
-        }
-
-        .cooking-text {
-          font-size: 2rem;
-          font-weight: 700 !important;
-          background: linear-gradient(45deg, #8b0000, #a30a28ff, #b22222);
-          background-size: 400% 400%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: glow 3s ease-in-out infinite alternate;
-          margin-top: 2rem;
-          margin-bottom: 2rem;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          font-family: "Arial Black", "Arial", sans-serif;
-          -webkit-font-smoothing: antialiased;
-          position: relative;
-          z-index: 2;
-        }
-
-        .highlight {
-          background: linear-gradient(45deg, #ff2d92, #ff6b6b);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          font-weight: 800;
-        }
-
-        .tedx-red {
-          color: #dc143c !important;
-          font-weight: 600;
-        }
-
-        .logo {
-          position: absolute;
-          top: calc(20% - 30px);
-          left: 50%;
-          transform: translate(-50%, -50%);
           pointer-events: none;
-          z-index: 1;
         }
 
         .logo img {
           width: 700px;
           height: auto;
           opacity: 1;
+          pointer-events: none;
+        }
+
+        .text-overlay {
+          background: rgba(0, 0, 0, 0.55);
+          padding: 3rem 3rem;
+          border-radius: 20px;
+          backdrop-filter: blur(6px);
+          z-index: 2;
+          position: relative;
+          max-width: 800px;
+          margin-top: 2.5rem;
+          text-align: center;
+          pointer-events: none;
+          box-shadow:
+            inset 1px 1px 4px rgba(255, 255, 255, 0.15),
+            inset -1px -1px 4px rgba(0, 0, 0, 0.5),
+            2px 2px 8px rgba(0, 0, 0, 0.6),
+            -2px -2px 8px rgba(255, 255, 255, 0.05);
+        }
+
+        .main-title,
+        .cooking-text {
+          font-family: "Helvetica", "Poppins", "Arial Black", Arial, sans-serif;
+          text-transform: uppercase;
+          pointer-events: none;
+        }
+
+        .main-title {
+          font-size: 3.8rem;
+          font-weight: 800;
+          color: #eb0028;
+          letter-spacing: 2px;
+          margin-bottom: 0.5rem;
+        }
+
+        .cooking-text {
+          color: #e8e8e8;
+          font-size: 1.3rem;
+          font-weight: 400;
+          letter-spacing: 1px;
         }
 
         @media (max-width: 768px) {
           .main-title {
-            font-size: 2rem;
-            margin-top: 4rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
+            font-size: 2.2rem;
           }
           .cooking-text {
-            font-size: 1.3rem;
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
           }
-          .subtitle {
-            font-size: 1rem;
-            margin-top: 1.5rem;
-            line-height: 1.4;
-            padding: 0 10px;
+          .text-overlay {
+            margin-top: 2rem;
+            padding: 2rem 1.5rem;
           }
           .logo img {
             width: 70vw;
             max-width: 350px;
-            min-width: 180px;
-            height: auto;
           }
         }
 
         @media (max-width: 480px) {
           .main-title {
-            font-size: 1.5rem;
-            margin-top: 3rem;
-            margin-bottom: 1rem;
+            font-size: 1.7rem;
           }
           .cooking-text {
-            font-size: 1.1rem;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
+            font-size: 1rem;
           }
-          .subtitle {
-            font-size: 0.9rem;
-            margin-top: 1rem;
+          .text-overlay {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1rem;
           }
           .logo img {
             width: 90vw;
             max-width: 350px;
-            min-width: 150px;
-            height: auto;
           }
         }
       `}</style>
