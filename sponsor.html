@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEDx Sponsors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* THEME: Deep Red fading into Black (Plane Gradient) */
+            background: radial-gradient(circle at 50% 10%, #4a0000 0%, #1a0000 40%, #000000 90%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & TITLES --- */
+        .header-section {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            /* The Text Glow Effect */
+            text-shadow: 0 0 20px rgba(230, 43, 30, 0.6); 
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            color: #e62b1e; /* Standard TEDx Red */
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #cccccc;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-top: 1px solid #e62b1e;
+            border-bottom: 1px solid #e62b1e;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- SPONSOR GRID LAYOUT --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            padding-bottom: 100px;
+        }
+
+        /* Tier 1: Title Sponsors (Larger) */
+        .tier-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #e62b1e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .grid-large {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        /* Tier 2: Associate Sponsors (Grid) */
+        .grid-small {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        /* --- CARD DESIGN --- */
+        .sponsor-card {
+            background: rgba(20, 20, 20, 0.8); /* Dark semi-transparent card */
+            border: 1px solid rgba(230, 43, 30, 0.2); /* Subtle red border */
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        /* The Radiant Glow on Hover */
+        .sponsor-card:hover {
+            transform: translateY(-10px);
+            border-color: #e62b1e;
+            box-shadow: 0 0 30px rgba(230, 43, 30, 0.4); /* Red glow fading out */
+            background: rgba(30, 0, 0, 0.9);
+        }
+
+        .sponsor-card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .sponsor-card:hover i {
+            color: #e62b1e;
+        }
+
+        .sponsor-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .sponsor-category {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-section">
+        <h1>Our <span>Partners</span></h1>
+        <div class="subtitle">Ideas. Forge. Future.</div>
+    </header>
+
+    <div class="container">
+        
+        <h2 class="tier-title">Title Sponsors</h2>
+        <div class="grid-large">
+            <div class="sponsor-card" style="width: 350px;">
+                <i class="fa-solid fa-atom"></i>
+                <div class="sponsor-name">Innovia Tech</div>
+                <div class="sponsor-category">Powered By</div>
+            </div>
+            <div class="sponsor-card" style="width: 350px;">
+                <i class="fa-solid fa-dna"></i>
+                <div class="sponsor-name">Synergy Labs</div>
+                <div class="sponsor-category">Co-Powered By</div>
+            </div>
+        </div>
+
+        <h2 class="tier-title">Associate Partners</h2>
+        <div class="grid-small">
+            
+            <div class="sponsor-card">
+                <i class="fa-solid fa-cloud"></i>
+                <div class="sponsor-name">Quantum Cloud</div>
+                <div class="sponsor-category">Technology</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-leaf"></i>
+                <div class="sponsor-name">Future Foods</div>
+                <div class="sponsor-category">Refreshment</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-plane-departure"></i>
+                <div class="sponsor-name">Aero Travels</div>
+                <div class="sponsor-category">Travel</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-bolt"></i>
+                <div class="sponsor-name">Spark Energy</div>
+                <div class="sponsor-category">Energy Drink</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-building"></i>
+                <div class="sponsor-name">Urban Estates</div>
+                <div class="sponsor-category">Venue</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <div class="sponsor-name">SecureGuard</div>
+                <div class="sponsor-category">Security</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-pen-nib"></i>
+                <div class="sponsor-name">Ink & Paper</div>
+                <div class="sponsor-category">Stationery</div>
+            </div>
+
+            <div class="sponsor-card">
+                <i class="fa-solid fa-camera-retro"></i>
+                <div class="sponsor-name">Focus Media</div>
+                <div class="sponsor-category">Photography</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
